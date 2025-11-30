@@ -43,6 +43,19 @@ export default function Register() {
                                     className="mt-2"
                                 />
                             </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="code">Code address</Label>
+                                <Input
+                                    id="code"
+                                    type="code"
+                                    required
+                                    tabIndex={2}
+                                    autoComplete="code"
+                                    name="code"
+                                    placeholder="SV001..."
+                                />
+                                <InputError message={errors.code} />
+                            </div>
 
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>

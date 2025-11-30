@@ -3,17 +3,20 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+use App\Http\Controllers\DashboardController; // Gọi Controller
 
+// SỬA Ở ĐÂY: Chuyển hướng ngay lập tức sang trang login
 Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
+    return redirect()->route('login');
+});
 
+// Nhóm các route cần đăng nhập mới xem được
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+
+    // Route Dashboard chuẩn, gọi dữ liệu từ Controller
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/students', [DashboardController::class, 'store'])->name('students.store');
+
 });
 
 require __DIR__.'/settings.php';

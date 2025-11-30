@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->string('code')->unique()->after('id');
             $table->string('class')->nullable()->after('email');
             $table->string('status')->default('Đang học')->after('class');
             $table->float('gpa',3,2)->default(0.0)->after('status');
@@ -24,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['class', 'status', 'gpa']);
+            $table->dropColumn(['code','class', 'status', 'gpa']);
         });
     }
 };
