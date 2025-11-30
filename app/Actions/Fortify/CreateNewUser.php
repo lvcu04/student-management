@@ -20,6 +20,8 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
+            // Thêm validate cho field code: bắt buộc, là chuỗi, tối đa 255 ký tự, và phải duy nhất trong bảng users
+            'code' => ['required', 'string', 'max:255', Rule::unique(User::class)],
             'email' => [
                 'required',
                 'string',
@@ -32,6 +34,7 @@ class CreateNewUser implements CreatesNewUsers
 
         return User::create([
             'name' => $input['name'],
+            'code' => $input['code'], 
             'email' => $input['email'],
             'password' => $input['password'],
         ]);

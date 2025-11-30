@@ -43,19 +43,22 @@ export default function Register() {
                                     className="mt-2"
                                 />
                             </div>
+                            
+                            {/* CẬP NHẬT PHẦN INPUT CODE TẠI ĐÂY */}
                             <div className="grid gap-2">
-                                <Label htmlFor="code">Code address</Label>
+                                <Label htmlFor="code">Student Code</Label>
                                 <Input
                                     id="code"
-                                    type="code"
+                                    type="text" // Sửa type="code" thành type="text"
                                     required
                                     tabIndex={2}
-                                    autoComplete="code"
+                                    autoComplete="off" // Code thường không cần autocomplete
                                     name="code"
                                     placeholder="SV001..."
                                 />
                                 <InputError message={errors.code} />
                             </div>
+                            {/* KẾT THÚC PHẦN CẬP NHẬT */}
 
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>
@@ -63,7 +66,7 @@ export default function Register() {
                                     id="email"
                                     type="email"
                                     required
-                                    tabIndex={2}
+                                    tabIndex={3} // Tăng tabIndex lên 3
                                     autoComplete="email"
                                     name="email"
                                     placeholder="email@example.com"
@@ -77,7 +80,7 @@ export default function Register() {
                                     id="password"
                                     type="password"
                                     required
-                                    tabIndex={3}
+                                    tabIndex={4} // Tăng tabIndex
                                     autoComplete="new-password"
                                     name="password"
                                     placeholder="Password"
@@ -93,7 +96,7 @@ export default function Register() {
                                     id="password_confirmation"
                                     type="password"
                                     required
-                                    tabIndex={4}
+                                    tabIndex={5} // Tăng tabIndex
                                     autoComplete="new-password"
                                     name="password_confirmation"
                                     placeholder="Confirm password"
@@ -106,7 +109,7 @@ export default function Register() {
                             <Button
                                 type="submit"
                                 className="mt-2 w-full"
-                                tabIndex={5}
+                                tabIndex={6}
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
@@ -116,7 +119,7 @@ export default function Register() {
 
                         <div className="text-center text-sm text-muted-foreground">
                             Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
+                            <TextLink href={login()} tabIndex={7}>
                                 Log in
                             </TextLink>
                         </div>

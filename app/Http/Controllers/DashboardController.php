@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
 
  
-        $students = User::select('id', 'name', 'email', 'class', 'status', 'gpa', 'created_at')
+        $students = User::select('id', 'name', 'code', 'email', 'class', 'status', 'gpa', 'created_at')
             ->orderBy('created_at', 'desc') 
             ->paginate(10);
 
@@ -38,27 +38,6 @@ class DashboardController extends Controller
             'stats' => $stats,
         ]);
     }
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'class' => 'required|string|max:50',
-            'gpa' => 'required|numeric|min:0|max:4',
-            'status' => 'required|in:active,inactive,suspended',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'class' => $validated['class'],
-            'gpa' => $validated['gpa'],
-            'status' => $validated['status'],
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Sinh viên đã được thêm thành công.');
-    }
+   
 };
 ?>

@@ -15,7 +15,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route Dashboard chuẩn, gọi dữ liệu từ Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::post('/students', [DashboardController::class, 'store'])->name('students.store');
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+
 
 });
 

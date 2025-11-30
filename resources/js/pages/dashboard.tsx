@@ -16,6 +16,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from 'react';
+import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: dashboard.url() },
@@ -30,7 +31,7 @@ const iconMap: Record<string, any> = {
 interface Student {
     id: number;
     name: string;
-    student_code: string; // Thêm trường này để hiển thị mã SV
+    code: string;
     email: string;
     date_of_birth: string | null;
     address: string | null;
@@ -58,16 +59,18 @@ interface DashboardProps {
 export default function Dashboard({ students, stats }: DashboardProps) {
     const [open, setOpen] = useState(false);
 
+    // SỬA ĐỔI: Chỉ sử dụng 'code', bỏ 'student_code' để khớp với database
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
+        code: '', // Dùng 'code'
         email: '',
-        student_code: '',
         date_of_birth: '',
         address: '',
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        // Hàm route() giờ đã được import và sẽ hoạt động
         post(route('students.store'), {
             onSuccess: () => {
                 reset();
@@ -122,19 +125,23 @@ export default function Dashboard({ students, stats }: DashboardProps) {
                                         {errors.name && <div className="text-red-500 text-xs mt-1">{errors.name}</div>}
                                     </div>
                                 </div>
+                                
+                                {/* SỬA ĐỔI: Input Mã SV binding vào 'code' thay vì 'student_code' */}
                                 <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label htmlFor="student_code" className="text-right">Mã SV</Label>
+                                    <Label htmlFor="code" className="text-right">Mã SV</Label>
                                     <div className="col-span-3">
                                         <Input
-                                            id="student_code"
-                                            value={data.student_code}
-                                            onChange={(e) => setData('student_code', e.target.value)}
+                                            id="code"
+                                            value={data.code} // Sửa thành data.code
+                                            onChange={(e) => setData('code', e.target.value)} // Sửa thành setData('code')
                                             placeholder="SV001"
                                             required
                                         />
-                                        {errors.student_code && <div className="text-red-500 text-xs mt-1">{errors.student_code}</div>}
+                                        {/* Sửa hiển thị lỗi thành errors.code */}
+                                        {errors.code && <div className="text-red-500 text-xs mt-1">{errors.code}</div>}
                                     </div>
                                 </div>
+
                                 <div className="grid grid-cols-4 items-center gap-4">
                                     <Label htmlFor="email" className="text-right">Email</Label>
                                     <div className="col-span-3">
@@ -238,7 +245,8 @@ export default function Dashboard({ students, stats }: DashboardProps) {
                                     students.data.map((student) => (
                                         <tr key={student.id} className="group hover:bg-gray-50 dark:hover:bg-gray-800/50">
                                             <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                {student.student_code || '---'}
+                                                {/* Hiển thị Mã SV */}
+                                                {student.code || '---'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="font-medium text-gray-900 dark:text-white">{student.name}</div>
