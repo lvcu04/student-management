@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\DashboardController; // Gọi Controller
-
+use App\Http\Controllers\StudentController;
 // SỬA Ở ĐÂY: Chuyển hướng ngay lập tức sang trang login
 Route::get('/', function () {
     return redirect()->route('login');
@@ -12,12 +12,8 @@ Route::get('/', function () {
 
 // Nhóm các route cần đăng nhập mới xem được
 Route::middleware(['auth', 'verified'])->group(function () {
-
-    // Route Dashboard chuẩn, gọi dữ liệu từ Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-
-
 });
 
 require __DIR__.'/settings.php';

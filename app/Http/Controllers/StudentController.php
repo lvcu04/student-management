@@ -28,10 +28,9 @@ class StudentController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'code' => $validated['code'],
-            'password' => Hash::make('12345678'), // Mật khẩu mặc định như mô tả trong Modal
-            // Các trường bổ sung (nếu có trong $fillable của model User)
-            // 'date_of_birth' => $validated['date_of_birth'], 
-            // 'address' => $validated['address'],
+            'password' => Hash::make('12345678'), 
+            'date_of_birth' => $validated['date_of_birth'], 
+            'address' => $validated['address'],
             'status' => 'Đang học', // Mặc định
             'gpa' => 0.0,           // Mặc định
         ]);

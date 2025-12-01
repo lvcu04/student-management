@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('class')->nullable()->after('email');
             $table->string('status')->default('Đang học')->after('class');
             $table->float('gpa',3,2)->default(0.0)->after('status');
+            $table->date('date_of_birth')->nullable()->after('gpa');
+            $table->string('address', 500)->nullable()->after('date_of_birth');
         });
     }
 

@@ -26,6 +26,8 @@ class User extends Authenticatable
         'class',
         'status',
         'gpa',
+        'date_of_birth', 
+        'address',
     ];
 
     /**
