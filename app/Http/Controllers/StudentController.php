@@ -38,4 +38,30 @@ class StudentController extends Controller
         // 3. Redirect về trang cũ kèm thông báo (nếu dùng flash message)
         return redirect()->back()->with('success', 'Thêm sinh viên thành công!');
     }
+    // THÊM MỚI: Hàm cập nhật
+    public function update(Request $request, User $student)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            // Validate unique ngoại trừ chính user đang sửa
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$student->id],
+            'code' => ['required', 'string', 'max:255', 'unique:users,code,'.$student->id],
+            'date_of_birth' => ['nullable', 'date'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'class' => ['nullable', 'string'],
+            'status' => ['nullable', 'string'], // Thêm status
+            'gpa' => ['nullable', 'numeric', 'min:0', 'max:4.0'], // Thêm GPA
+        ]);
+
+        $student->update($validated);
+
+        return redirect()->back()->with('success', 'Đã cập nhật thông tin sinh viên!');
+    }
+
+    // THÊM MỚI: Hàm xóa
+    public function destroy(User $student)
+    {
+        $student->delete();
+        return redirect()->back()->with('success', 'Đã xóa sinh viên khỏi hệ thống!');
+    }
 }

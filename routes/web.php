@@ -14,6 +14,12 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+    Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
+    Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+    Route::get('/classroom', function () {
+        return Inertia::render('classroom');
+    })->name('classroom');
 });
 
 require __DIR__.'/settings.php';
