@@ -14,6 +14,9 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->isAdmin()) {
+           abort(403, 'Bạn không có quyền thực hiện hành động này.');
+        }
         // 1. Validate dữ liệu đầu vào
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -33,6 +36,7 @@ class StudentController extends Controller
             'address' => $validated['address'],
             'status' => 'Đang học', // Mặc định
             'gpa' => 0.0,           // Mặc định
+            'role' => 'student',    // Mặc định
         ]);
 
         // 3. Redirect về trang cũ kèm thông báo (nếu dùng flash message)
@@ -51,6 +55,7 @@ class StudentController extends Controller
             'class' => ['nullable', 'string'],
             'status' => ['nullable', 'string'], // Thêm status
             'gpa' => ['nullable', 'numeric', 'min:0', 'max:4.0'], // Thêm GPA
+            
         ]);
 
         $student->update($validated);

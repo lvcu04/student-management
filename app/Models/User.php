@@ -28,6 +28,7 @@ class User extends Authenticatable
         'gpa',
         'date_of_birth', 
         'address',
+        'role',
     ];
 
     /**
@@ -54,5 +55,8 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+    public function isAdmin() {
+        return $this->role === 'admin';
     }
 }
