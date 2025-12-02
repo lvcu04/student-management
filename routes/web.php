@@ -17,6 +17,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
     Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 
+
+    Route::post('/ai-chat', [AiController::class, 'chat'])->name('ai.chat');
     Route::get('/classroom', function () {
         return Inertia::render('classroom');
     })->name('classroom');

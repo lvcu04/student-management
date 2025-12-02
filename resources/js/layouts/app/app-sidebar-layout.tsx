@@ -4,7 +4,7 @@ import { AppSidebar } from '@/components/app-sidebar';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren } from 'react';
-
+import AiChatWidget from '@/components/ai-chat-widget';
 export default function AppSidebarLayout({
     children,
     breadcrumbs = [],
@@ -16,6 +16,7 @@ export default function AppSidebarLayout({
                 <AppSidebarHeader breadcrumbs={breadcrumbs} />
                 {children}
             </AppContent>
+            <AiChatWidget />
         </AppShell>
     );
 }
