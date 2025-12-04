@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
-use App\Http\Controllers\DashboardController; // Gọi Controller
+use App\Http\Controllers\DashboardController; 
 use App\Http\Controllers\StudentController;
-// SỬA Ở ĐÂY: Chuyển hướng ngay lập tức sang trang login
+use App\Http\Controllers\AiChatController;
 Route::get('/', function () {
     return redirect()->route('login');
 });
@@ -18,7 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 
 
-    Route::post('/ai-chat', [AiController::class, 'chat'])->name('ai.chat');
+    Route::post('/ai-chat', [AiChatController::class, 'chat'])->name('ai.chat');
     Route::get('/classroom', function () {
         return Inertia::render('classroom');
     })->name('classroom');
