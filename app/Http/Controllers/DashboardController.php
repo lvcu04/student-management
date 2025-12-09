@@ -33,11 +33,23 @@ class DashboardController extends Controller
             // Thêm các stat khác nếu cần
         ];
 
+        
+
+        //Lấy thông báo của user đang đăng nhập
+        $notifications = [];
+        if (auth()->check()) {
+            $notifications = auth()->user()->notifications()->latest()->take(3)->get();
+        
+            //đánh dấu đã đọc
+            auth()->user()->unreadNotifications->markAsRead();
+        }
         return Inertia::render('dashboard', [
-            'students' => $students,
-            'stats' => $stats,
-        ]);
+        'students' => $students,
+        'stats' => $stats,
+        'riskChartData' => $riskDistribution ?? [], 
+        'notifications' => $notifications, 
+    ]);
+
     }
-   
 };
 ?>

@@ -58,11 +58,12 @@ interface DashboardProps {
         color: string;
     }>;
     auth: {
-        user: Student; // Sử dụng lại interface Student cho user hiện tại vì cấu trúc giống nhau
+        user: Student; 
     };
+    notifications: any[];
 }
 
-export default function Dashboard({ students, stats }: DashboardProps) {
+export default function Dashboard({ students, stats, notifications }: DashboardProps) {
     // 1. Lấy thông tin User đang đăng nhập để kiểm tra quyền
     const { auth } = usePage<any>().props;
     const currentUser = auth.user;
@@ -326,7 +327,44 @@ export default function Dashboard({ students, stats }: DashboardProps) {
                             </div>
                             <div className="absolute right-0 top-0 h-full w-1/3 bg-white/10 skew-x-12 transform"></div>
                         </div>
-
+                        {/* --- KHU VỰC THÔNG BÁO TỪ AI (MỚI) --- */}
+                            {notifications.length > 0 && (
+                                <div className="grid gap-4">
+                                    {notifications.map((notif) => (
+                                        <div 
+                                            key={notif.id} 
+                                            className={`relative overflow-hidden rounded-xl border p-6 shadow-sm transition-all hover:shadow-md ${
+                                                notif.data.type === 'canh_bao' 
+                                                    ? 'border-red-100 bg-red-50 dark:border-red-900 dark:bg-red-900/20' 
+                                                    : notif.data.type === 'khen_ngoi'
+                                                    ? 'border-green-100 bg-green-50 dark:border-green-900 dark:bg-green-900/20'
+                                                    : 'border-blue-100 bg-blue-50 dark:border-blue-900 dark:bg-blue-900/20'
+                                            }`}
+                                        >
+                                            <div className="flex items-start gap-4">
+                                                {/* Icon cảm xúc */}
+                                                <div className="text-3xl">
+                                                    {notif.data.type === 'canh_bao' ? '😟' : notif.data.type === 'khen_ngoi' ? '🌟' : '💡'}
+                                                </div>
+                                                
+                                                <div className="flex-1">
+                                                    <h4 className={`text-sm font-bold uppercase tracking-wide ${
+                                                        notif.data.type === 'canh_bao' ? 'text-red-600' : notif.data.type === 'khen_ngoi' ? 'text-green-600' : 'text-blue-600'
+                                                    }`}>
+                                                        {notif.data.title}
+                                                    </h4>
+                                                    <p className="mt-2 text-lg font-medium text-gray-800 dark:text-gray-100 italic">
+                                                        "{notif.data.message}"
+                                                    </p>
+                                                    <p className="mt-2 text-xs text-gray-400">
+                                                        Được gửi vào: {new Date(notif.created_at).toLocaleDateString('vi-VN')}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         {/* Thông tin chính dạng Grid */}
                         <div className="grid gap-6 md:grid-cols-3">
                             {/* Thẻ GPA */}

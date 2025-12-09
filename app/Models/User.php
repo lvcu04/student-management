@@ -29,6 +29,11 @@ class User extends Authenticatable
         'date_of_birth', 
         'address',
         'role',
+        // --- CÁC TRƯỜNG MỚI CHO AI & ĐIỂM RÈN LUYỆN ---
+        'training_score', // Điểm rèn luyện
+        'risk_score',     // Điểm rủi ro (0-100)
+        'risk_status',    // Trạng thái (High/Medium/Low)
+        'predicted_at',   // Thời gian dự đoán gần nhất
     ];
 
     /**
@@ -54,8 +59,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'predicted_at' => 'datetime', // Ép kiểu này để dùng được hàm format ngày tháng
         ];
     }
+
     public function isAdmin() {
         return $this->role === 'admin';
     }
